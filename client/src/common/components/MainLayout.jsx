@@ -4,7 +4,6 @@ import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../redux/authAction';
-import logo from '../../../public/logo.png'; // Đường dẫn đến logo của bạn
 const { Header, Content, Sider } = Layout;
 
 const MainLayout = ({ children }) => {
@@ -25,7 +24,7 @@ const MainLayout = ({ children }) => {
       <Header className="bg-[#001529] px-6 flex justify-between items-center">
         <div className="flex items-center gap-2"> {/* Điều chỉnh khoảng cách giữa logo và text */}
             <img 
-            src={logo} // Đường dẫn đến logo của bạn
+            src='/logo.png' // Đường dẫn đến logo của bạn
             alt="TTCS CAFFE"
             className="h-12" // Bạn có thể điều chỉnh kích thước của logo tùy ý
             />

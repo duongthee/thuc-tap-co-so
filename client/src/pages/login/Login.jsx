@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Typography, Card, Checkbox } from 'antd';
+import { Form, Input, Button, Typography, Card, Checkbox, message } from 'antd';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../common/redux/authSlice';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../../public/logo.png'; // Đường dẫn đến logo của bạn
 const { Title, Text } = Typography;
 
 const Login = () => {
@@ -25,8 +24,8 @@ const Login = () => {
         user: res.data.user,
         token: res.data.token,
       }));
-      // Nếu dùng tính năng “ghi nhớ”, bạn có thể lưu thêm vào localStorage
       if (remember) localStorage.setItem('rememberMe', 'true');
+      message.success('Đăng nhập thành công!');
       navigate('/home');
     } catch (error) {
       const errMsg = error.response?.data?.message || 'Đăng nhập thất bại!';
@@ -42,7 +41,7 @@ const Login = () => {
       <div className="flex flex-col items-center mb-6">
         {/* Hàng chứa logo + title */}
         <div className="flex items-center mb-2">
-            <img src={logo} alt="TTCS CAFFE" className="h-16 mr-4" />
+            <img src='/logo.png' alt="TTCS CAFFE" className="h-16 mr-4" />
             <Title level={3} className="mb-0">Chào mừng quay trở lại</Title>
         </div>
         {/* Dòng phụ text */}
