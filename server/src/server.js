@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './configs/db.config.js';
 import employeeRoutes from './routes/employee.route.js';
 import authRoutes from './routes/auth.route.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'], // Cho phép headers cần thiết
   credentials: true, // Cho phép gửi cookie (credentials)
 };
-
+app.use(cookieParser()); // Giúp đọc cookie từ request
 app.use(cors(corsOptions)); // Sử dụng cấu hình CORS
 app.use(express.json());
 
