@@ -101,70 +101,72 @@ const MainLayout = ({ children }) => {
     setCollapsed(prev => !prev);
   };
   return (
-    <Layout className="min-h-screen">
-      {/* Header */}
-      <Header className="bg-[#001529] px-6 flex justify-between items-center  ">
-        <div className="flex items-center gap-2"> 
-            <img 
-            src='/logo.png' 
-            alt="TTCS CAFFE"
-            className="h-12" 
-            />
-            <div className="text-white text-xl font-semibold">TTCS CAFFE</div>
-        </div>
+    <Layout className="min-h-screen bg-gray-100"> {/* Thêm màu nền xám nhạt */}
+  {/* Header */}
+  <Header className="bg-[#001529] px-6 flex justify-between items-center">
+    <div className="flex items-center gap-2">
+      <img
+        src="/logo.png"
+        alt="TTCS CAFFE"
+        className="h-12"
+      />
+      <div className="text-white text-xl font-semibold">TTCS CAFFE</div>
+    </div>
 
-        <div className="flex items-center gap-3">
-            <Avatar 
-            icon={<UserOutlined />} 
-            style={{ backgroundColor: '#141414' }} 
-            />
-            <span className="text-white">{user?.employeeId?.name}</span>
-            <Button
-            icon={<LogoutOutlined />}
-            onClick={handleLogout}
-            style={{
-                backgroundColor: '#dc2626', 
-                color: 'white',
-                border: 'none',
-            }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#ef4444';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#dc2626';
-            }}
-            >
-            Đăng xuất
-            </Button>
-        </div>
-        </Header>
+    <div className="flex items-center gap-3">
+      <Avatar
+        icon={<UserOutlined />}
+        style={{ backgroundColor: '#141414' }}
+      />
+      <span className="text-white">{user?.employeeId?.name}</span>
+      <Button
+        icon={<LogoutOutlined />}
+        onClick={handleLogout}
+        style={{
+          backgroundColor: '#dc2626',
+          color: 'white',
+          border: 'none',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#ef4444';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = '#dc2626';
+        }}
+      >
+        Đăng xuất
+      </Button>
+    </div>
+  </Header>
 
-      {/* Body Layout */}
-      <Layout>
-        <Sider width={210} theme="dark" collapsible collapsed={collapsed} className="min-h-screen">
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            theme="dark"
-            items={items}
-            onClick={({ key }) => {
-              if (key === 'toggle') {
-                toggleCollapsed();
-              }
-              else {
-                navigate(key);
-              }
-            }}
-          />
-        </Sider>
+  {/* Body Layout */}
+  <Layout>
+    <Sider width={210} theme="dark" collapsible collapsed={collapsed} className="min-h-screen">
+      <Menu
+        mode="inline"
+        defaultSelectedKeys={['1']}
+        theme="dark"
+        items={items}
+        onClick={({ key }) => {
+          if (key === 'toggle') {
+            toggleCollapsed();
+          } else {
+            navigate(key);
+          }
+        }}
+      />
+    </Sider>
 
-        <Layout className="p-6">
-          <Content className="bg-white p-6 rounded-xl shadow-md min-h-[280px]">
-            {children}
-          </Content>
-        </Layout>
-      </Layout>
+    <Layout className="p-6">
+      <Content
+        className="bg-white rounded-xl shadow-md min-h-[280px]"
+        style={{ padding: '16px' }} // Thêm padding trực tiếp
+      >
+        {children}
+      </Content>
     </Layout>
+  </Layout>
+</Layout>
   );
 };
 

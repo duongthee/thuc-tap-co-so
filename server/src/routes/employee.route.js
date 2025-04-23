@@ -9,11 +9,11 @@ import {
 import { verifyToken } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
-router.use(verifyToken); // Bảo vệ tất cả các route bên dưới bằng middleware xác thực token
-router.post('/', createEmployee);
+router.use(verifyToken); 
 router.get('/', getAllEmployees);
 router.get('/:id', getEmployeeById);
+router.post('/', createEmployee);
 router.put('/:id', updateEmployee);
-router.delete('/:id', deleteEmployee);
+router.delete('/:id',deleteEmployee);
 
 export default router;

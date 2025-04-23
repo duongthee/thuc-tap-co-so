@@ -4,8 +4,6 @@ import { login, logout } from '../controllers/auth.controller.js';
 import { register } from '../controllers/auth.controller.js';
 
 const router = express.Router();
-
-// POST /api/auth/login
 router.post(
   '/login',
   [
@@ -24,7 +22,6 @@ router.post(
   },
   login
 );
-
 // POST /api/auth/logout
 router.post('/logout', logout);
 router.post('/register', register);

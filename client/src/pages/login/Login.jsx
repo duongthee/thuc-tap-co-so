@@ -12,26 +12,18 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const URL = import.meta.env.VITE_API_URL + '/api/auth/login';
 
-  const onFinish = async ({ email, password, remember }) => {
-    try {
-      setLoading(true);
-      const res = await axios.post(
-        URL,
-        { email, password },
-        { withCredentials: true }
-      );
-      dispatch(loginSuccess({
-        user: res.data.user,
-        token: res.data.token,
-      }));
-      if (remember) localStorage.setItem('rememberMe', 'true');
-      message.success('Đăng nhập thành công!');
-      navigate('/home');
+  const onFinish = async ({ email, password }) => {
+     try {
+        const res = await axios.post(URL, { email, password }, { withCredentials: true });
+        dispatch(loginSuccess({
+          user: res.data.user,
+          token: res.data.token,
+        }));
+       message.success('Đăng nhập thành công!');
+
     } catch (error) {
       const errMsg = error.response?.data?.message || 'Đăng nhập thất bại!';
       message.error(errMsg);
-    } finally {
-      setLoading(false);
     }
   };
 

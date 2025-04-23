@@ -11,8 +11,27 @@ export const createEmployee = async (req, res) => {
 
 export const getAllEmployees = async (req, res) => {
   try {
-    const employees = await employeeService.getAllEmployees();
-    res.json(employees);
+    const { page, limit, name, position, gender , sortBy= "name" , sortOrder = "asc"} = req.query;
+    const result = await employeeService.getAllEmployees({
+      page,
+      limit,
+      name,
+      position,
+      gender,
+      sortBy,
+      sortOrder, 
+    });
+
+    res.json({
+      message: 'Lấy danh sách nhân viên thành công',
+      data: result.employees,
+      pagination: {
+        currentPage: result.currentPage,
+        totalPages: result.totalPages,
+        totalRecords: result.totalRecords,
+        limit: result.limit,
+      },
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

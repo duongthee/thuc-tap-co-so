@@ -42,22 +42,21 @@ export const registerUser = async ({ email, password, role, employeeId }) => {
     err.status = 400;
     throw err;
   }
-
   // Kiểm tra employeeId có hợp lệ không
   const employee = await Employee.findById(employeeId);
-  if (!employee) {
-    const err = new Error('Employee không tồn tại');
-    err.status = 400;
-    throw err;
-  }
+    if (!employee) {
+      const err = new Error('Employee không tồn tại');
+      err.status = 400;
+      throw err;
+    }
 
-  const newUser = new User({
-    email,
-    password,
-    role,
-    employeeId
-  });
+    const newUser = new User({
+      email,
+      password,
+      role,
+      employeeId
+    });
 
-  await newUser.save();
-  return newUser;
-};
+    await newUser.save();
+    return newUser;
+  };
