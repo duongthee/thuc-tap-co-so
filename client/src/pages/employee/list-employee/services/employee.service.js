@@ -20,3 +20,27 @@ export const getEmployee = async (page, limit, filter, sortBy = "name" , sortOrd
     throw new Error(error.response?.data?.message || 'Lỗi không xác định!');
   }
 };
+export const getEmployeeById = async (id) => {
+  try {
+    const response = await apiClient.get(`/employees/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Không thể tải thông tin nhân viên");
+  }
+};
+export const addEmployee = async (employeeData) => {
+  try {
+    const response = await apiClient.post("/employees", employeeData);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Không thể thêm nhân viên");
+  }
+};
+export const updateEmployee = async (id, employeeData) => {
+  try {
+    const response = await apiClient.put(`/employees/${id}`, employeeData);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Không thể cập nhật nhân viên");
+  }
+};
