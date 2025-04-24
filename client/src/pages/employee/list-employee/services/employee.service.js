@@ -44,3 +44,12 @@ export const updateEmployee = async (id, employeeData) => {
     throw new Error(error.response?.data?.message || "Không thể cập nhật nhân viên");
   }
 };
+
+export const deleteEmployee = async (id) => {
+  try {
+    const response = await apiClient.delete(`/employees/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Không thể xóa nhân viên");
+  }
+};

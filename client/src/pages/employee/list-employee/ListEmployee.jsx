@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Table, Button, Space, message, Select, Row, Col, Input, Tag } from "antd";
+import { Table, Button, Space, message, Select, Row, Col, Input, Tag , Modal } from "antd";
 import { EditOutlined, EyeOutlined, DeleteOutlined, FilterOutlined } from "@ant-design/icons";
-import { getEmployee, getEmployeeById , addEmployee , updateEmployee} from "./services/employee.service.js";
+import { getEmployee, getEmployeeById , addEmployee , updateEmployee , deleteEmployee} from "./services/employee.service.js";
 import ModalFilter from "./components/ModalFilter";
 import ModalEmployee from "./components/ModalEmployee";
 import debounce from "lodash.debounce";
@@ -14,7 +14,7 @@ const EmployeeTable = () => {
     current: 1,
     pageSize: 10,
     total: 0,
-    pageSizeOptions: ["1", "5", "20"],
+    pageSizeOptions: ["2", "5", "10"],
     showSizeChanger: true,
     showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
   });
@@ -176,6 +176,24 @@ const EmployeeTable = () => {
       message.error("Không thể xử lý yêu cầu!");
     }
   };
+
+  const handleDeleteEmployee = (employee) => {
+  Modal.confirm({
+    title: `Bạn có muốn xóa nhân viên ${employee.name}?`,
+    content: "Hành động này không thể hoàn tác.",
+    okText: "Xác nhận",
+    cancelText: "Hủy",
+    onOk: async () => {
+      try {
+        await deleteEmployee(employee._id); // Gọi API xóa nhân viên
+        message.success(`Đã xóa nhân viên: ${employee.name}`);
+        setTrigger(true); // Kích hoạt useEffect để tải lại danh sách
+      } catch (error) {
+        message.error("Không thể xóa nhân viên!");
+      }
+    },
+  });
+};
   const columns = [
     {
       title: "STT",
@@ -278,7 +296,7 @@ const EmployeeTable = () => {
               padding: "6px 12px",
               borderRadius: "4px",
             }}
-            onClick={() => message.success(`Đã xóa nhân viên: ${record.name}`)}
+            onClick={() => handleDeleteEmployee(record)} // Gọi hàm xử lý xóa
           >
             Xóa
           </Button>
