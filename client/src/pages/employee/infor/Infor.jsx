@@ -20,9 +20,9 @@ const Infor = () => {
             {new Date(employee.dob).toLocaleDateString("vi-VN")}
           </Descriptions.Item>
           <Descriptions.Item label="Chức vụ">{employee.position}</Descriptions.Item>
-          <Descriptions.Item label="Email liên hệ">{employee.emailContact}</Descriptions.Item>
-          <Descriptions.Item label="Số điện thoại">{employee.phoneContact}</Descriptions.Item>
-          <Descriptions.Item label="Lương theo giờ">{employee.salaryPerHour} VND</Descriptions.Item>
+          <Descriptions.Item label="Email liên hệ">{employee.email}</Descriptions.Item>
+          <Descriptions.Item label="Số điện thoại">{employee.phone}</Descriptions.Item>
+          <Descriptions.Item label="Lương cứng">{employee.salaryPerHour} VND</Descriptions.Item>
         </Descriptions>
       </Card>
     </div>

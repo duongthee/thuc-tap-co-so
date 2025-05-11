@@ -106,11 +106,11 @@ const MainLayout = ({ children }) => {
   <Header className="bg-[#001529] px-6 flex justify-between items-center">
     <div className="flex items-center gap-2">
       <img
-        src="/logo.png"
-        alt="TTCS CAFFE"
+        src="/iconttcs.jpg"
+        alt="TTCS Studio"
         className="h-12"
       />
-      <div className="text-white text-xl font-semibold">TTCS CAFFE</div>
+      <div className="text-white text-xl font-semibold">TTCS Studio</div>
     </div>
 
     <div className="flex items-center gap-3">

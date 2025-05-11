@@ -33,11 +33,11 @@ const Login = () => {
       <div className="flex flex-col items-center mb-6">
         {/* Hàng chứa logo + title */}
         <div className="flex items-center mb-2">
-            <img src='/logo.png' alt="TTCS CAFFE" className="h-16 mr-4" />
+            <img src='/iconttcs.jpg' alt="TTCS Studio" className="h-16 mr-4" />
             <Title level={3} className="mb-0">Chào mừng quay trở lại</Title>
         </div>
         {/* Dòng phụ text */}
-        <Text type="secondary">Đăng nhập vào TTCS CAFFE</Text>
+        <Text type="secondary">Đăng nhập vào TTCS Studio</Text>
         </div>
         <Form
           name="login"

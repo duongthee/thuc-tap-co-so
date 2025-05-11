@@ -253,9 +253,9 @@ const EmployeeTable = () => {
     },
     {
       title: "Số điện thoại",
-      dataIndex: "phoneContact",
+      dataIndex: "phone",
       align: "center",
-      key: "phoneContact",
+      key: "phone",
     },
     {
       title: "Chức năng",
