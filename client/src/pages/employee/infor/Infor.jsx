@@ -22,7 +22,6 @@ const Infor = () => {
           <Descriptions.Item label="Chức vụ">{employee.position}</Descriptions.Item>
           <Descriptions.Item label="Email liên hệ">{employee.email}</Descriptions.Item>
           <Descriptions.Item label="Số điện thoại">{employee.phone}</Descriptions.Item>
-          <Descriptions.Item label="Lương cứng">{employee.salaryPerHour} VND</Descriptions.Item>
         </Descriptions>
       </Card>
     </div>

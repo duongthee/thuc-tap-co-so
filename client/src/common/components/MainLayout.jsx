@@ -6,7 +6,6 @@ import { logoutUser } from '../redux/authAction';
 const { Header, Content, Sider } = Layout;
 import { useState } from 'react';
 import {
-  DashboardOutlined,
   CalendarOutlined,
   TeamOutlined,
   UserOutlined,
@@ -14,8 +13,6 @@ import {
   DollarOutlined,
   BarChartOutlined,
   ProfileOutlined,
-  ScheduleOutlined,
-  OrderedListOutlined,
   LogoutOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined
@@ -26,76 +23,90 @@ const MainLayout = ({ children }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+
   const handleLogout = () => {
     dispatch(logoutUser()).then(() => {
-        navigate('/login', { replace: true });
-        message.success('Đăng xuất thành công!');
+      navigate('/login', { replace: true });
+      message.success('Đăng xuất thành công!');
     });
   };
-  const location = useLocation();
-  const items = [
-  {
-    key: 'toggle',
-    icon: collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />,
-    label: collapsed ? 'Mở rộng' : 'Thu gọn',
-  },
-  {
-    key: '/dashboard',
-    icon: <DashboardOutlined />,
-    label: 'Dashboard',
-  },
-  {
-    key: 'schedule',
-    icon: <CalendarOutlined />,
-    label: 'Lịch',
-    children: [
+
+  const handleMenuClick = ({ key }) => {
+    if (key === 'toggle') {
+      setCollapsed(prev => !prev);
+      return;
+    }
+
+    // Chỉ cho phép xem bảng lương của chính mình
+    if (user?.role === 'Staff' && key === '/payroll/employee') {
+      navigate(`/payroll/employee/${user.employeeId._id}`);
+      return;
+    }
+
+    navigate(key);
+  };
+
+  // Tạo menu items dựa trên role của user
+  const getMenuItems = () => {
+    const baseItems = [
       {
-        key: '/schedule/assign',
-        icon: <ScheduleOutlined />,
-        label: 'Đăng ký lịch',
+        key: 'toggle',
+        icon: collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />,
+        label: collapsed ? 'Mở rộng' : 'Thu gọn',
       },
       {
-        key: '/schedule/set',
-        icon: <OrderedListOutlined />,
-        label: 'Sắp xếp lịch',
-      },
-    ],
-  },
-  {
-    key: 'employee',
-    icon: <TeamOutlined />,
-    label: 'Nhân sự',
-    children: [
-      {
+        key: '/job/assign',
+        icon: <CalendarOutlined />,
+        label: 'Công việc',
+      }
+    ];
+
+    // Menu items cho nhân sự
+    const employeeItems = {
+      key: 'employee',
+      icon: <TeamOutlined />,
+      label: 'Nhân sự',
+      children: [
+        {
+          key: '/employee/infor',
+          icon: <UserOutlined />,
+          label: 'Thông tin cá nhân',
+        }
+      ]
+    };
+
+    // Menu items cho lương
+    const payrollItems = {
+      key: 'payroll',
+      icon: <DollarOutlined />,
+      label: 'Lương',
+      children: [
+        {
+          key: '/payroll/employee',
+          icon: <ProfileOutlined />,
+          label: 'Lương chi tiết',
+        }
+      ]
+    };
+
+    // Nếu không phải Staff, thêm các menu items bổ sung
+    if (user?.role !== 'Staff') {
+      employeeItems.children.unshift({
         key: '/employee/list',
         icon: <SolutionOutlined />,
-        label: 'Thống kê nhân sự',
-      },
-      {
-        key: '/employee/infor',
-        icon: <UserOutlined />,
-        label: 'Thông tin cá nhân',
-      },
-    ],
-  },
-  {
-    key: 'payroll',
-    icon: <DollarOutlined />,
-    label: 'Lương',
-    children: [
-      {
+        label: 'Danh sách nhân viên',
+      });
+
+      payrollItems.children.unshift({
         key: '/payroll/list',
         icon: <BarChartOutlined />,
         label: 'Thống kê lương',
-      },
-      {
-        key: '/payroll/employee',
-        icon: <ProfileOutlined />,
-        label: 'Lương chi tiết',
-      },
-    ],
-  },
-];
+      });
+    }
+
+    return [...baseItems, employeeItems, payrollItems];
+  };
 
   const toggleCollapsed = () => {
     setCollapsed(prev => !prev);
@@ -144,16 +155,10 @@ const MainLayout = ({ children }) => {
     <Sider width={210} theme="dark" collapsible collapsed={collapsed} className="min-h-screen">
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={[location.pathname]}
         theme="dark"
-        items={items}
-        onClick={({ key }) => {
-          if (key === 'toggle') {
-            toggleCollapsed();
-          } else {
-            navigate(key);
-          }
-        }}
+        items={getMenuItems()}
+        onClick={handleMenuClick}
       />
     </Sider>
 

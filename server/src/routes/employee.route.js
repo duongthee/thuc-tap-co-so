@@ -6,10 +6,11 @@ import {
   updateEmployee,
   deleteEmployee,
 } from '../controllers/employee.controller.js';
-import { verifyToken } from '../middlewares/auth.middleware.js';
+import { verifyToken, checkStaffPermission } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
-router.use(verifyToken); 
+router.use(verifyToken);
+router.use(checkStaffPermission);
 router.get('/', getAllEmployees);
 router.get('/:id', getEmployeeById);
 router.post('/', createEmployee);

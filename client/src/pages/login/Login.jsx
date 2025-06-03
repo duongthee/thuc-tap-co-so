@@ -13,17 +13,31 @@ const Login = () => {
   const URL = import.meta.env.VITE_API_URL + '/api/auth/login';
 
   const onFinish = async ({ email, password }) => {
-     try {
-        const res = await axios.post(URL, { email, password }, { withCredentials: true });
+    setLoading(true);
+    try {
+      const res = await axios.post(URL, { email, password }, { 
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (res.data && res.data.user && res.data.token) {
         dispatch(loginSuccess({
           user: res.data.user,
           token: res.data.token,
         }));
-       message.success('Đăng nhập thành công!');
-
+        message.success('Đăng nhập thành công!');
+        navigate('/dashboard'); // Chuyển hướng sau khi đăng nhập thành công
+      } else {
+        throw new Error('Dữ liệu phản hồi không hợp lệ');
+      }
     } catch (error) {
-      const errMsg = error.response?.data?.message || 'Đăng nhập thất bại!';
+      console.error('Login error:', error);
+      const errMsg = error.response?.data?.message || 'Đăng nhập thất bại! Vui lòng kiểm tra lại email và mật khẩu.';
       message.error(errMsg);
+    } finally {
+      setLoading(false);
     }
   };
 

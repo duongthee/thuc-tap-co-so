@@ -26,11 +26,10 @@ const ModalFilter = ({ visible, onCancel, onApply }) => {
         </Form.Item>
         <Form.Item label="Chức vụ" name="position">
           <Select placeholder="Chọn chức vụ" allowClear>
-            <Option value="Admin">Admin</Option>
             <Option value="Quản lý">Quản lý</Option>
-            <Option value="Thu ngân">Thu ngân</Option>
-            <Option value="Pha chế">Pha chế</Option>
-            <Option value="Phục vụ">Phục vụ</Option>
+            <Option value="Admin">Admin</Option>
+            <Option value="Photographer">Photographer</Option>
+            <Option value="CamOp">CamOp</Option>
           </Select>
         </Form.Item>
       </Form>

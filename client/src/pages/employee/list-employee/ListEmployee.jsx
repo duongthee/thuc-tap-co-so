@@ -226,17 +226,11 @@ const EmployeeTable = () => {
           case "Admin":
             color = "red";
             break;
-          case "Quản lý":
-            color = "blue";
-            break;
-          case "Thu ngân":
-            color = "green";
-            break;
-          case "Pha chế":
+          case "Photographer":
             color = "orange";
             break;
-          case "Phục vụ":
-            color = "purple";
+          case "CamOp":
+            color = "green";
             break;
           default:
             color = "gray";

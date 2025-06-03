@@ -12,7 +12,8 @@ const ModalEmployeeForm = ({ visible, onClose, onSubmit, mode, employeeData }) =
       // Nếu là chế độ sửa, điền dữ liệu vào form
       form.setFieldsValue({
         ...employeeData,
-        dob: employeeData.dob ? moment(employeeData.dob) : null, // Chuyển ngày sinh thành moment
+        dob: employeeData.dob ? moment(employeeData.dob) : null,
+        startWork: employeeData.startWork ? moment(employeeData.startWork) : null,
       });
     } else {
       form.resetFields(); // Reset form nếu là chế độ thêm
@@ -23,8 +24,14 @@ const ModalEmployeeForm = ({ visible, onClose, onSubmit, mode, employeeData }) =
     form
       .validateFields()
       .then((values) => {
+        // Chuyển đổi moment objects thành ISO string trước khi gửi lên server
+        const formattedValues = {
+          ...values,
+          dob: values.dob ? values.dob.toISOString() : null,
+          startWork: values.startWork ? values.startWork.toISOString() : null,
+        };
         form.resetFields(); // Reset form sau khi submit
-        onSubmit(values); // Gửi dữ liệu lên cha
+        onSubmit(formattedValues); // Gửi dữ liệu đã format lên cha
       })
       .catch((info) => {
         message.error("Vui lòng kiểm tra lại các trường nhập liệu!");
@@ -61,7 +68,7 @@ const ModalEmployeeForm = ({ visible, onClose, onSubmit, mode, employeeData }) =
             <Option value="Nữ">Nữ</Option>
           </Select>
         </Form.Item>
-        <Form.Item
+        <Form.Item  
           label="Ngày sinh"
           name="dob"
           rules={[{ required: true, message: "Vui lòng chọn ngày sinh!" }]}
@@ -76,14 +83,13 @@ const ModalEmployeeForm = ({ visible, onClose, onSubmit, mode, employeeData }) =
           <Select placeholder="Chọn chức vụ">
             <Option value="Admin">Admin</Option>
             <Option value="Quản lý">Quản lý</Option>
-            <Option value="Thu ngân">Thu ngân</Option>
-            <Option value="Pha chế">Pha chế</Option>
-            <Option value="Phục vụ">Phục vụ</Option>
+            <Option value="CamOp">CamOp</Option>
+            <Option value="Photograper">Photographer</Option>
           </Select>
         </Form.Item>
         <Form.Item
           label="Email liên hệ"
-          name="emailContact"
+          name="email"
           rules={[
             { required: true, message: "Vui lòng nhập email liên hệ!" },
             { type: "email", message: "Email không hợp lệ!" },
@@ -99,15 +105,18 @@ const ModalEmployeeForm = ({ visible, onClose, onSubmit, mode, employeeData }) =
           <Input placeholder="Nhập số điện thoại" />
         </Form.Item>
         <Form.Item
-          label="Lương theo giờ (VND)"
-          name="salaryPerHour"
-          rules={[{ required: true, message: "Vui lòng nhập lương theo giờ!" }]}
+          label="Địa chỉ"
+          name="address"
+          rules={[{ required: true, message: "Vui lòng nhập địa chỉ!" }]}
         >
-          <InputNumber
-            placeholder="Nhập lương theo giờ"
-            style={{ width: "100%" }}
-            min={0}
-          />
+          <Input placeholder="Nhập địa chỉ" />
+        </Form.Item>
+        <Form.Item
+          label="Ngày bắt đầu làm việc"
+          name="startWork"
+          rules={[{ required: true, message: "Vui lòng chọn ngày bắt đầu làm việc!" }]}
+        >
+          <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" />
         </Form.Item>
       </Form>
     </Modal>
